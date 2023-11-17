@@ -25,7 +25,7 @@
 
 `courses` EECS151, CS61c
 
-`simulator` [gem5](./gem5/): 尝试使用, 通过复现论文来入门
+`simulator` gem5: 尝试使用, 通过复现论文来入门
 
 `open sourse projects` nemu(模拟器), tinyriscv, Nuclei E203
 
@@ -44,3 +44,5 @@
 - Static Bubble: A Framework for Deadlock-free Irregular On-chip Topologies (HPCA’17)
 - Footprint: Regulating Routing Adaptiveness in Networks-on-Chip (ISCA’17)
 - Pitstop: Enabling a virtual network free network-on-chip (HPCA’21)
+
+`projects` 使用gem5复现Pitstop(HPCA’21)

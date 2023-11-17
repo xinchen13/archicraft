@@ -37,4 +37,10 @@
 
 `papers` 加深对NoC研究的问题的理解:通过 abstraction + introduction + motivationn + background 搞懂文章究竟在解决什么问题, 其次才是了解方法细节
 
+- The adaptive bubble router (JPDC’01)
+- A case for bufferless routing in on-chip networks (ISCA’09)
+- Ariadne: Agnostic reconfiguration in a disconnected network environment (ICPACT’11)
+- DBAR: An Efficient Routing Algorithm to Support Multiple Concurrent Applications in Networks-on-Chip (ISCA’11)
+- Static Bubble: A Framework for Deadlock-free Irregular On-chip Topologies (HPCA’17)
+- Footprint: Regulating Routing Adaptiveness in Networks-on-Chip (ISCA’17)
 - Pitstop: Enabling a virtual network free network-on-chip (HPCA’21)

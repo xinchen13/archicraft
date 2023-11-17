@@ -1,9 +1,10 @@
 # roadmap-4-digital-ic
 
 ## Universal
-`EECS 基础` 电路, C/C++, 信号处理, 通信, 计算机体系结构
+`EECS basics` 电路, C/C++, 信号处理, 通信, 计算机体系结构
 
 `Verilog` hdlbits, 牛客网. 实现常用模块: api, iic, uart, fifo, sramfifo
+- Clifford E. Cummings关于reset/状态机/fifo的文章
 
 `tools` synopsys的vcs, verdi, dc, spyglass(有时间看中后端相关), 参考芯王国
 

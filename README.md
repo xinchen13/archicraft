@@ -25,7 +25,7 @@
 
 `courses` EECS151, CS61c
 
-`simulator` gem5: 尝试使用, 通过复现论文来入门
+`simulator` [gem5](./gem5/): 尝试使用, 通过复现论文来入门
 
 `open sourse projects` nemu(模拟器), tinyriscv, Nuclei E203
 

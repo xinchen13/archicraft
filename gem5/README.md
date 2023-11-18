@@ -20,7 +20,7 @@ compile gem5 separately for every ISA that you want to simulate
 使用Scons编译gem5, Scons根据`SConstruct`文件来进行编译. 通过命令行可以指定编译参数，比如示例中为:
 
 ```python
-python3 `which scons` build/X86/gem5.opt -j0
+python3 `which scons` build/X86/gem5.opt -j9
 ```
 
 编译完成后会得到一个gem5的可执行文件`build/X86/gem5.opt`
@@ -33,7 +33,7 @@ gem5 binary types：
 ## Configure gem5
 set up a configuration script to model a system 
 
-编译gem5得到的binary文件以一个python脚本为参数，来构建系统，为系统模块指定参数和运行simulation. 在`configs/examples`中有一些配置脚本的示例参考
+编译gem5得到的binary文件以一个python脚本为参数，来构建系统，为系统模块指定参数和运行simulation
 
 ### SimObjects
 gem5的模块化设计是通过SimObject类型实现的，大多数组件都是SimObjects: CPUs, caches, memory controllers, buses等等
@@ -69,3 +69,18 @@ gem5有两套完全不同的子系统来对系统的cache进行建模，取决�
 - Ruby: 能够细致地建模cache coherence
 
 cache的SimObject声明在`src/mem/cache/Cache.py`中，其中定义了我们可以设置的参数. 许多cache的参数没有默认值，需要在`m5.instantiate()`前指定
+
+## gem5 statistics and output
+除了simulation脚本的输出，在`m5out/`下还有三个输出文件: 
+- `config.ini`: 包括每个创建的SimObject以及对应的参数值，用于确认系统及其参数
+- `config.json`: 内容与`config.ini`一致，json格式
+- `stats.txt`: simulation记录的所有gem5数据的文本表示，首先包含总的执行数据，接着是SimObject的数据，值得关注的数据有sim_seconds(simulated time for the simulation), sim_insts(the number of instructions committed by the CPU), host_inst_rate(the performance of gem5).
+
+## default configuration scripts
+所有关于gem5的配置脚本都在`configs/`, 一些有用的:
+- `boot/`: 与FS mode有关的rcS文件
+- `common/`: 一些helper脚本和函数帮助创建simulation
+- `dram/`: 测试DRAM的脚本
+- `example/`: 开箱即用的gem5配置脚本，尤其是`se.py`和`fs.py`
+- `network/`: HeteroGarnet网络的配置脚本
+- `ruby/`: Ruby和缓存一致性协议的配置脚本

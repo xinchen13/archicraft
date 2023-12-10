@@ -1,9 +1,5 @@
 # a simple tutorial for Garnet
-
 run and modify Garnet as a stand-alone in gem5. Garnet models the interconnection network in gem5. It is cyclic accurate, implements the micro-architecture of on-chip router, and uses gem5 ruby memory system for topology and routing
-
-### Garnet source file 
-Garnet is written in C++ and uses python to pass the configuration parameters to the C++ objects. All the files are available in `src/mem/ruby/network/garnet/`. In this folder, the NoC and the router micro-architecture is implemented
 
 ### Compile and first run
 to run Garnet as a stand-alone, compile it with the following command
@@ -55,3 +51,10 @@ some parameters:
 - [--synthetic=bit_complement] traffic pattern
 - [--injectionrate=0.200] injection rate
 - [--vcs-per-vnet=2] number of VCs per vitrual network
+
+### Garnet source file 
+Garnet is written in C++ and uses python to pass the configuration parameters to the C++ objects. All the files are available in `src/mem/ruby/network/garnet/`. In this folder, the NoC and the router micro-architecture is implemented
+
+Scons is a modern software construct tool (similar to Make); it's scripts are written in python. In gem5, any folder that includes a Scons script file will be compiled into gem5 according to the scripts content
+
+Take the Scons script in Garnet folder as an example. This script is located in `src/mem/ruby/network/garnet/Sconscript`. The script is strightforward: to add source file, say `x.cc`, simple add `Source('x.cpp')` in the Scons script

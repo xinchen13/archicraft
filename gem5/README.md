@@ -81,6 +81,6 @@ cache的SimObject声明在`src/mem/cache/Cache.py`中，其中定义了我们可
 - `boot/`: 与FS mode有关的rcS文件
 - `common/`: 一些helper脚本和函数帮助创建simulation
 - `dram/`: 测试DRAM的脚本
-- `example/`: 开箱即用的gem5配置脚本，尤其是`se.py`和`fs.py`
+- `deprecated/example/`: 开箱即用的gem5配置脚本，尤其是`se.py`和`fs.py`
 - `network/`: HeteroGarnet网络的配置脚本
-- `ruby/`: Ruby和缓存一致性协议的配置脚本
+- `ruby/`: Ruby和缓存一致性协议的配置脚本    

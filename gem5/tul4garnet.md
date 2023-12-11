@@ -40,17 +40,47 @@ change any default value of any configuration parameter directly in the related 
 --routing-algorithm=1
 ```
 
-some parameters:
-
-- [--num-cpus=16] number of CPU = 16
-- [--num-dirs=16] number of cache directories = 16
+system configuration:
+- [--num-cpus=16] number of CPU = 16, the number of source (injection) nodes in the network
+- [--num-dirs=16] number of cache directories = 16, the number of destination (ejection) nodes in the network
 - [--network=garnet] configure the network as garnet network
 - [--topology=Mesh_XY] use `Mesh_XY.py` topology in `configs/topologies/`
 - [--mesh-rows=4] number of rows in the network layout
-- [--sim-cycles=100000] run simulation for 100000 cycles
-- [--synthetic=bit_complement] traffic pattern
-- [--injectionrate=0.200] injection rate
+
+network configuration:
+- [--router-latency] number of pipeline stages in the garnet router. Has to be >= 1. Can be over-ridden on a per router basis in the topology file
+- [--link-latency] latency of each link in the network. Has to be >= 1. Can be over-ridden on a per link basis in the topology file
 - [--vcs-per-vnet=2] number of VCs per vitrual network
+- [--link-width-bits] width in bits for all links inside the garnet network. Default = 128.
+
+traffic injecion
+- [--sim-cycles=100000] run simulation for 100000 cycles
+- [--synthetic=bit_complement] traffic pattern:  ‘uniform_random’, ‘tornado’, ‘bit_complement’, ‘bit_reverse’, ‘bit_rotation’, ‘neighbor’, ‘shuffle’, and ‘transpose’
+- [--injectionrate=0.200] injection rate
+- [--num-packets-max] maximum number of packets to be injected by each cpu node. Default value is -1 (keep injecting till sim-cycles)
+- [--single-sender-id] only inject from this sender. To send from all nodes, set to -1
+- [--single-dest-id] only send to this destination. To send to all destinations as specified by the synthetic traffic pattern, set to -1
+- [--inj-vnet] only inject in this vnet (0, 1 or 2). 0 and 1 are 1-flit, 2 is 5-flit. Set to -1 to inject randomly in all vnets
+
+### result
+after running, extract network status by `extract_network_stats.sh`:
+
+```sh
+echo > m5out/network_stats.txt
+grep "packets_injected::total" m5out/stats.txt | sed 's/system.ruby.network.packets_injected::total\s*/packets_injected = /' >> m5out/network_stats.txt
+grep "packets_received::total" m5out/stats.txt | sed 's/system.ruby.network.packets_received::total\s*/packets_received = /' >> m5out/network_stats.txt
+grep "average_packet_queueing_latency" m5out/stats.txt | sed 's/system.ruby.network.average_packet_queueing_latency\s*/average_packet_queueing_latency = /' >> m5out/network_stats.txt
+grep "average_packet_network_latency" m5out/stats.txt | sed 's/system.ruby.network.average_packet_network_latency\s*/average_packet_network_latency = /' >> m5out/network_stats.txt
+grep "average_packet_latency" m5out/stats.txt | sed 's/system.ruby.network.average_packet_latency\s*/average_packet_latency = /' >> m5out/network_stats.txt
+grep "flits_injected::total" m5out/stats.txt | sed 's/system.ruby.network.flits_injected::total\s*/flits_injected = /' >> m5out/network_stats.txt
+grep "flits_received::total" m5out/stats.txt | sed 's/system.ruby.network.flits_received::total\s*/flits_received = /' >> m5out/network_stats.txt
+grep "average_flit_queueing_latency" m5out/stats.txt | sed 's/system.ruby.network.average_flit_queueing_latency\s*/average_flit_queueing_latency = /' >> m5out/network_stats.txt
+grep "average_flit_network_latency" m5out/stats.txt | sed 's/system.ruby.network.average_flit_network_latency\s*/average_flit_network_latency = /' >> m5out/network_stats.txt
+grep "average_flit_latency" m5out/stats.txt | sed 's/system.ruby.network.average_flit_latency\s*/average_flit_latency = /' >> m5out/network_stats.txt
+grep "average_hops" m5out/stats.txt | sed 's/system.ruby.network.average_hops\s*/average_hops = /' >> m5out/network_stats.txt
+```
+
+run by `./extract_network_stats.sh`
 
 ### Garnet source file 
 Garnet is written in C++ and uses python to pass the configuration parameters to the C++ objects. All the files are available in `src/mem/ruby/network/garnet/`. In this folder, the NoC and the router micro-architecture is implemented
@@ -58,3 +88,26 @@ Garnet is written in C++ and uses python to pass the configuration parameters to
 Scons is a modern software construct tool (similar to Make); it's scripts are written in python. In gem5, any folder that includes a Scons script file will be compiled into gem5 according to the scripts content
 
 Take the Scons script in Garnet folder as an example. This script is located in `src/mem/ruby/network/garnet/Sconscript`. The script is strightforward: to add source file, say `x.cc`, simple add `Source('x.cpp')` in the Scons script
+
+### debug
+#### 1.inject one (or more fixed number of) packet(s) into the network from a specific source to a specific destination
+
+This can be done by the following command-line options
+```sh
+--num-packets-max=<maximum packets to inject> \
+--single-sender-id=<sender_id> \
+--single-dest-id=<dest_id>
+```
+e.g.
+```sh
+./build/Garnet_standalone/gem5.debug configs/example/garnet_synth_traffic.py \
+--ruby --ruby-clock=1GHz \
+--sys-clock=1GHz \
+--mem-type=SimpleMemory \
+--num-cpus=16 \
+--num-dirs=16 \
+--synthetic=bit_complement --injectionrate=0.200 --sim-cycles=100000 --inj-vnet=2 \
+--network=garnet --topology=Mesh_XY --mesh-rows=4 --vcs-per-vnet=2 --link-latency=1 --router-latency=1 \
+--routing-algorithm=1 \
+--num-packets-max=3 --single-sender-id=1 --single-dest-id=2
+```

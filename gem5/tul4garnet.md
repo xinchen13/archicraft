@@ -89,7 +89,7 @@ Scons is a modern software construct tool (similar to Make); it's scripts are wr
 
 Take the Scons script in Garnet folder as an example. This script is located in `src/mem/ruby/network/garnet/Sconscript`. The script is strightforward: to add source file, say `x.cc`, simple add `Source('x.cpp')` in the Scons script
 
-### debug
+### debug tips
 #### 1.inject one (or more fixed number of) packet(s) into the network from a specific source to a specific destination
 
 This can be done by the following command-line options
@@ -110,4 +110,23 @@ e.g.
 --network=garnet --topology=Mesh_XY --mesh-rows=4 --vcs-per-vnet=2 --link-latency=1 --router-latency=1 \
 --routing-algorithm=1 \
 --num-packets-max=3 --single-sender-id=1 --single-dest-id=2
+```
+
+#### 2.print debug messages
+debug messages throughout the Garnet code are in the following format:
+`DPRINTF(RubyNetwork, "Debug message is here and is printing value %d", variable)`
+
+We can add our own debug messages across the code to track the progress of a flit. To print the debug messages, add `--debug-flags=RubyNetwork` as follows:
+
+```sh
+./build/Garnet_standalone/gem5.debug --debug-flags=RubyNetwork configs/example/garnet_synth_traffic.py \
+--ruby --ruby-clock=1GHz \
+--sys-clock=1GHz \
+--mem-type=SimpleMemory \
+--num-cpus=16 \
+--num-dirs=16 \
+--synthetic=bit_complement --injectionrate=0.200 --sim-cycles=100000 --inj-vnet=2 \
+--network=garnet --topology=Mesh_XY --mesh-rows=4 --vcs-per-vnet=2 --link-latency=1 --router-latency=1 \
+--routing-algorithm=1 \
+--num-packets-max=1 --single-sender-id=1 --single-dest-id=2
 ```

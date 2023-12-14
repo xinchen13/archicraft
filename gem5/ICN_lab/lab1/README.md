@@ -48,10 +48,8 @@ run shuffle traffic at increasing injection rates through a 8x8 Mesh NoC for 100
 ## 3.Analysis
 draw pictures with [draw.py](./draw.py)
 
-#### Which of the two traffic patterns has a lower low-load latency
-shuffle:
+#### Which of the two traffic patterns has a lower low-load latency: shuffle
 ![Figure_2.png](./Figure_2.png)
 
-#### Which of the two traffic patterns has a higher throughput
-uniform random:
+#### Which of the two traffic patterns has a higher throughput: uniform random
 ![Figure_1.png](./Figure_1.png)

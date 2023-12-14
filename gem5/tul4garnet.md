@@ -62,26 +62,6 @@ traffic injecion
 - [--single-dest-id] only send to this destination. To send to all destinations as specified by the synthetic traffic pattern, set to -1
 - [--inj-vnet] only inject in this vnet (0, 1 or 2). 0 and 1 are 1-flit, 2 is 5-flit. Set to -1 to inject randomly in all vnets
 
-### result
-after running, extract network status by `extract_network_stats.sh`:
-
-```sh
-echo > m5out/network_stats.txt
-grep "packets_injected::total" m5out/stats.txt | sed 's/system.ruby.network.packets_injected::total\s*/packets_injected = /' >> m5out/network_stats.txt
-grep "packets_received::total" m5out/stats.txt | sed 's/system.ruby.network.packets_received::total\s*/packets_received = /' >> m5out/network_stats.txt
-grep "average_packet_queueing_latency" m5out/stats.txt | sed 's/system.ruby.network.average_packet_queueing_latency\s*/average_packet_queueing_latency = /' >> m5out/network_stats.txt
-grep "average_packet_network_latency" m5out/stats.txt | sed 's/system.ruby.network.average_packet_network_latency\s*/average_packet_network_latency = /' >> m5out/network_stats.txt
-grep "average_packet_latency" m5out/stats.txt | sed 's/system.ruby.network.average_packet_latency\s*/average_packet_latency = /' >> m5out/network_stats.txt
-grep "flits_injected::total" m5out/stats.txt | sed 's/system.ruby.network.flits_injected::total\s*/flits_injected = /' >> m5out/network_stats.txt
-grep "flits_received::total" m5out/stats.txt | sed 's/system.ruby.network.flits_received::total\s*/flits_received = /' >> m5out/network_stats.txt
-grep "average_flit_queueing_latency" m5out/stats.txt | sed 's/system.ruby.network.average_flit_queueing_latency\s*/average_flit_queueing_latency = /' >> m5out/network_stats.txt
-grep "average_flit_network_latency" m5out/stats.txt | sed 's/system.ruby.network.average_flit_network_latency\s*/average_flit_network_latency = /' >> m5out/network_stats.txt
-grep "average_flit_latency" m5out/stats.txt | sed 's/system.ruby.network.average_flit_latency\s*/average_flit_latency = /' >> m5out/network_stats.txt
-grep "average_hops" m5out/stats.txt | sed 's/system.ruby.network.average_hops\s*/average_hops = /' >> m5out/network_stats.txt
-```
-
-run by `./extract_network_stats.sh`
-
 ### Garnet source file 
 Garnet is written in C++ and uses python to pass the configuration parameters to the C++ objects. All the files are available in `src/mem/ruby/network/garnet/`. In this folder, the NoC and the router micro-architecture is implemented
 
@@ -109,7 +89,7 @@ e.g.
 --synthetic=bit_complement --injectionrate=0.200 --sim-cycles=100000 --inj-vnet=2 \
 --network=garnet --topology=Mesh_XY --mesh-rows=4 --vcs-per-vnet=2 --link-latency=1 --router-latency=1 \
 --routing-algorithm=1 \
---num-packets-max=3 --single-sender-id=1 --single-dest-id=2
+--num-packets-max=3 --single-sender-id=1 --single-dest-id=7
 ```
 
 #### 2.print debug messages
@@ -130,3 +110,9 @@ We can add our own debug messages across the code to track the progress of a fli
 --routing-algorithm=1 \
 --num-packets-max=1 --single-sender-id=1 --single-dest-id=2
 ```
+
+### useful scripts
+- [build_debug.sh](./my_scripts/build_debug.sh): build Garnet_standalone (debug version)
+- [build_opt.sh](./my_scripts/build_opt.sh): build Garnet_standalone (opt version)
+- [extract_network_stats.sh](./my_scripts/extract_network_stats.sh) extract network stats
+- 

@@ -10,3 +10,5 @@ grep "average_flit_queueing_latency" m5out/stats.txt | sed 's/system.ruby.networ
 grep "average_flit_network_latency" m5out/stats.txt | sed 's/system.ruby.network.average_flit_network_latency\s*/average_flit_network_latency = /' >> m5out/network_stats.txt
 grep "average_flit_latency" m5out/stats.txt | sed 's/system.ruby.network.average_flit_latency\s*/average_flit_latency = /' >> m5out/network_stats.txt
 grep "average_hops" m5out/stats.txt | sed 's/system.ruby.network.average_hops\s*/average_hops = /' >> m5out/network_stats.txt
+echo >> m5out/network_stats.txt
+cat  m5out/network_stats.txt

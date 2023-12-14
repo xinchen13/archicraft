@@ -1,7 +1,7 @@
 # Running Synthetic Traffic through a Network
 
-## Uniform Random Traffic
-run uniform random traffic at increasing injection rates through a 8x8 Mesh NoC for 10000 cycles, and plot the latency-throughput curve
+## 1.Uniform Random Traffic
+run uniform random traffic at increasing injection rates through a 8x8 Mesh NoC for 1000000 cycles, and plot the latency-throughput curve
 
 command to run:
 ```sh
@@ -40,4 +40,18 @@ average_hops = 3.750000                       (Unspecified)
 Increase the `injection rate` at intervals of 0.02, till it reaches 0.5. This will give a total of 25 data points.
 For each data point, add the `average_packet_latency` value in [uniform_random.txt](./uniform_random.txt) one after the other.
 
-run the script: [lab1.sh](./lab1.sh), get the result
+run the script: [lab1_uniform_random.sh](./lab1_uniform_random.sh), get the result
+
+## 2.Shuffle Traffic
+run shuffle traffic at increasing injection rates through a 8x8 Mesh NoC for 1000000 cycles, and plot the latency-throughput curve. change `--synthetic` to shuffle, run [lab1_shuffle.sh](./lab1_shuffle.sh) create [shuffle.txt](./shuffle.txt)
+
+## 3.Analysis
+draw pictures with [draw.py](./draw.py)
+
+#### Which of the two traffic patterns has a lower low-load latency
+shuffle:
+![Figure_2.png](./Figure_2.png)
+
+#### Which of the two traffic patterns has a higher throughput
+uniform random:
+![Figure_1.png](./Figure_1.png)

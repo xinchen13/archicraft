@@ -1,4 +1,4 @@
-# roadmap-4-digital-ic
+# eecs-it-yourself
 
 ## Universal
 ### EECS basics

@@ -1,6 +1,6 @@
 # Topology Comparison
 - construct new topologis
-- compare a Mesh (called Mesh_XY in Garnet), Flattened-Butterfly, and a hierarchical ring topology for network performance
+- compare a Mesh (called Mesh_XY in Garnet), Flattened-Butterfly, for network performance
 - design space exploration: run a suite of simulations for of these three topologies and plot the results
 
 ## Flattened Butterfly Topology
@@ -36,7 +36,7 @@ within a column)
 - start at a (packet) injection rate of 0.02, and keep incrementing in intervals of 0.02 till the network saturates
 
 #### requirements
-for each (configuration, traffic pattern) pair, plot the average packet latency vs. injection rate for all three topologies on the same graph: Mesh, Flattened Butterfly and Hierarchical ring. 
+for each (configuration, traffic pattern) pair, plot the average packet latency vs. injection rate for both topologies on the same graph: Mesh and Flattened Butterfly
 
 Sample run command is shown below:
 ```sh
@@ -54,3 +54,5 @@ Sample run command is shown below:
 --link-width-bits=32
 ```
 
+## Analysis
+run [lab2.sh](./lab2.sh) and save the result (in [./result/](./result/))

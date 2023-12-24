@@ -1,6 +1,6 @@
 # Topology Comparison
 - construct new topologis
-- compare a Mesh (called `Mesh_XY` in Garnet), `Flattened-Butterfly`, and a `hierarchical ring` topology for network performance
+- compare a Mesh (called Mesh_XY in Garnet), Flattened-Butterfly, and a hierarchical ring topology for network performance
 - design space exploration: run a suite of simulations for of these three topologies and plot the results
 
 ## Flattened Butterfly Topology
@@ -14,7 +14,7 @@ ISCA 2007
 - do not need to implement the concentration factor (4 nodes connected to one Router) used in the paper(assume Garnet’s default one traffic injector per router)
 
 #### steps
-1. Create [FlattenedButterfly.py]() in `$gem5/configs/topologies`
+1. Create [FlattenedButterfly.py](./FlattenedButterfly.py) in `$gem5/configs/topologies`
     - take a look at `Mesh_XY.py` for reference
     - all links are uni-directional – i.e., we need to add links in both directions
     - notice a link weight of “1” on the x-links and “2” on the y-links for deadlock avoidance. use the same allocation in the topologies

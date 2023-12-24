@@ -1,6 +1,6 @@
 # Running Synthetic Traffic through a Network
 
-## 1.Uniform Random Traffic
+## Uniform Random Traffic
 run uniform random traffic at increasing injection rates through a 8x8 Mesh NoC for 1000000 cycles, and plot the latency-throughput curve
 
 command to run:

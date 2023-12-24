@@ -19,8 +19,11 @@ ISCA 2007
     - all links are uni-directional – i.e., we need to add links in both directions
     - notice a link weight of “1” on the x-links and “2” on the y-links for deadlock avoidance. use the same allocation in the topologies
     - the router ids used in Mesh_XY code follow the following numbering scheme (0 to 15)
+![num-scheme.png](./picture1.png)
 
-![picture1.png](./picture1.png)
+    - the link of 4*4 Flattened-Butterfly is shown below(the routers within a row are fully connected, as are the routers
+within a column)
+![Flattened-Butterfly](./picture2.png)
 
 2. print all the links that are created every time a simulation is run for debugging
 3. testing: i.e. inject one (or more fixed number of) packet(s) into the network from a specific source to a specific destination

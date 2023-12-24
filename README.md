@@ -1,5 +1,4 @@
-# eecs-it-yourself
-
+# ArchiCraft
 ## 数字电路设计基础
 数字集成电路设计
 

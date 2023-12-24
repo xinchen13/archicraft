@@ -1,5 +1,5 @@
 # gem5
-gem5的简单上手教程
+gem5的简单上手教程 / Garnet入门与进阶
 
 ## Introduction
 - a modular discrete event driven computer system simulator platform

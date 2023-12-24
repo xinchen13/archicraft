@@ -9,13 +9,13 @@ gem5的简单上手教程
 
 入门资料: 官方documentation
 
-#### WHY Simulator
+### WHY Simulator
 <img src="./pictures/pic1.png" width="500" />
 
 <img src="./pictures/pic2.png" width="500" />
 
 ## a simple tul for run gem5
-#### Build gem5
+### Build gem5
 compile gem5 separately for every ISA that you want to simulate
 
 使用Scons编译gem5, Scons根据`SConstruct`文件来进行编译. 通过命令行可以指定编译参数，比如示例中为:
@@ -31,12 +31,12 @@ gem5 binary types：
 - `opt`: most optimization, debug symbols, faster
 - `fast`: all optimization, no debug symbols, fastest and much smaller
 
-#### Configure gem5
+### Configure gem5
 set up a configuration script to model a system 
 
 编译gem5得到的binary文件以一个python脚本为参数，来构建系统，为系统模块指定参数和运行simulation
 
-#### SimObjects
+### SimObjects
 gem5的模块化设计是通过SimObject类型实现的，大多数组件都是SimObjects: CPUs, caches, memory controllers, buses等等
 
 gem5 exports all of these objects from their C++ implementation to python
@@ -50,20 +50,20 @@ gem5 exports all of these objects from their C++ implementation to python
 5. 例化system与simulation并执行
 6. 在命令行运行simulation: 如`build/X86/gem5.opt configs/tutorial/part1/simple.py`
 
-#### gem5 ports
+### gem5 ports
 gem5使用了端口抽象(封装)，每个memory对象都有两种类型的端口: `request ports`和`response ports`, 在连接时将request port连接到response port(利用等号赋值的方式连接，与顺序无关)
 
-#### full system vs syscall emulation
+### full system vs syscall emulation
 gem5 有两种运行模式: `syscall emulation(SE)`and`full system(FS)`modes
 - FS: 仿真(emulate)整个硬件系统并且运行一个未修改过的内核，类似运行虚拟机
 - SE: 主要关注CPU和memory系统，仿真Linux系统调用，只能建模user-mode代码
 
-#### baseCPUs
+### baseCPUs
 gem5 提供的CPU以`{ISA}{Type}CPU`的方式命名. 例如, 一个RISCV Minor CPU为RiscvMinorCPU
 - Valid ISAs: Riscv, Arm, X86, Sparc, Power, Mips
 - Valid CPU types: AtomicSimpleCPU, O3CPU, TimingSimpleCPu, KvmCPU, MinorCPU
 
-#### Add cache to the configuration script
+### Add cache to the configuration script
 gem5有两套完全不同的子系统来对系统的cache进行建模，取决于是否修改cache coherence protocal/cache coherence protocal对系统性能影响, 作者画了个饼以后会将两者合并:)
 - calssic: 简单且不够灵活的MOESI一致性协议
 - Ruby: 能够细致地建模cache coherence
@@ -88,7 +88,7 @@ cache的SimObject声明在`src/mem/cache/Cache.py`中，其中定义了我们可
 ## gem5 NOC simulation (a simple tutorial for Garnet)
 run and modify Garnet as a stand-alone in gem5. Garnet models the interconnection network in gem5. It is cyclic accurate, implements the micro-architecture of on-chip router, and uses gem5 ruby memory system for topology and routing
 
-#### Compile and first run
+### Compile and first run
 to run Garnet as a stand-alone, compile it with the following command
 
 ```sh
@@ -101,17 +101,12 @@ run gem5 using the `garnet_synth_traffic.py` configuration file with default con
 ./build/Garnet_standalone/gem5.debug configs/example/garnet_synth_traffic.py 
 ```
 
-#### Configuration parameters
-in general, all the configurations can be found in `config/` folder
-
-most of the configuration parameters related to Garnet can be found in the following files and folders
-
-
+### Configuration parameters
+in general, all the configurations can be found in `config/` folder. most of the configuration parameters related to Garnet can be found in the following files and folders
 - `configs/common/Options.py`: general configration parameters (i.e. number CPUs, directories, memory size, ... etc.)  
 - `configs/network/Network.py`: network configuration parameters (i.e. router & link latency, routing algorithm, topology... etc.) 
 - `configs/topologies/`: topologies are defined here
 - `configs/example/garnet_synth_traffic.py`: template file, include configuration parameters related to a single run (i.e. traffic pattern type, injection rate, number of simulation cycles, ... etc.)
-
 
 change any default value of any configuration parameter directly in the related configuration file or change it from command line as follows: `./build/Garnet_standalone/gem5.debug configs/example/garnet_synth_traffic.py [--configuration_name=value]`, e.g.
 
@@ -127,20 +122,20 @@ change any default value of any configuration parameter directly in the related 
 --routing-algorithm=1
 ```
 
-system configuration:
+#### system configuration
 - [--num-cpus=16] number of CPU = 16, the number of source (injection) nodes in the network
 - [--num-dirs=16] number of cache directories = 16, the number of destination (ejection) nodes in the network
 - [--network=garnet] configure the network as garnet network
 - [--topology=Mesh_XY] use `Mesh_XY.py` topology in `configs/topologies/`
 - [--mesh-rows=4] number of rows in the network layout
 
-network configuration:
+#### network configuration
 - [--router-latency] number of pipeline stages in the garnet router. Has to be >= 1. Can be over-ridden on a per router basis in the topology file
 - [--link-latency] latency of each link in the network. Has to be >= 1. Can be over-ridden on a per link basis in the topology file
 - [--vcs-per-vnet=2] number of VCs per vitrual network
 - [--link-width-bits] width in bits for all links inside the garnet network. Default = 128.
 
-traffic injecion
+#### traffic injecion
 - [--sim-cycles=100000] run simulation for 100000 cycles
 - [--synthetic=bit_complement] traffic pattern:  ‘uniform_random’, ‘tornado’, ‘bit_complement’, ‘bit_reverse’, ‘bit_rotation’, ‘neighbor’, ‘shuffle’, and ‘transpose’
 - [--injectionrate=0.200] injection rate
@@ -149,7 +144,7 @@ traffic injecion
 - [--single-dest-id] only send to this destination. To send to all destinations as specified by the synthetic traffic pattern, set to -1
 - [--inj-vnet] only inject in this vnet (0, 1 or 2). 0 and 1 are 1-flit, 2 is 5-flit. Set to -1 to inject randomly in all vnets
 
-#### Garnet source file 
+### Garnet source file 
 Garnet is written in C++ and uses python to pass the configuration parameters to the C++ objects. All the files are available in `src/mem/ruby/network/garnet/`. In this folder, the NoC and the router micro-architecture is implemented
 
 Scons is a modern software construct tool (similar to Make); it's scripts are written in python. In gem5, any folder that includes a Scons script file will be compiled into gem5 according to the scripts content

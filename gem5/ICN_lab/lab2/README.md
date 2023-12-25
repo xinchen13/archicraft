@@ -19,17 +19,17 @@ ISCA 2007
     - all links are uni-directional – i.e., we need to add links in both directions
     - notice a link weight of “1” on the x-links and “2” on the y-links for deadlock avoidance. use the same allocation in the topologies
     - the router ids used in Mesh_XY code follow the following numbering scheme (0 to 15)
-![num-scheme.png](./picture1.png)
+![num-scheme.png](./pictures/picture1.png)
 
     - the link of 4*4 Flattened-Butterfly is shown below(the routers within a row are fully connected, as are the routers
 within a column)
-![Flattened-Butterfly](./picture2.png)
+![Flattened-Butterfly](./pictures/picture2.png)
 
 2. print all the links that are created every time a simulation is run for debugging
 3. testing: i.e. inject one (or more fixed number of) packet(s) into the network from a specific source to a specific destination
 4. run this topology by specifying `--topology=FlattenedButterfly`
 
-## Preset
+## Configuration
 #### traffic description
 - all packets are 64-bits wide: the number of flits in every packet = (packet_size / link width)
 - run Uniform Random(`--synthetic=uniform_random`), Tornado(`--synthetic=tornado`) and Neighbor(`--synthetic=neighbor`) traffic pattern for all the designs; the details of each traffic pattern can be seen in `src/cpu/testers/garnet_synthetic_traffic/GarnetSyntheticTraffic.cc`
@@ -55,4 +55,13 @@ Sample run command is shown below:
 ```
 
 ## Analysis
-run [lab2.sh](./lab2.sh) and save the result (in [./result/](./result/))
+run [lab2.sh](./scripts/lab2.sh) and save the fig (in [./results/](./results/))
+
+### uniform_random
+![uniform_random.png](./results/uniform_random.png)
+
+### tornado
+![tornado.png](./results/tornado.png)
+
+### neighbor
+![neighbor.png](./results/neighbor.png)
